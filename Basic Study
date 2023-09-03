@@ -1,0 +1,115 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.*;
+
+public class JDBCdemo {
+	public static void main(String[] args) throws SQLException {
+		delete();
+	}
+     
+	//Read
+	 public static void readRecords()throws SQLException {
+		String url="jdbc:mysql://localhost:3306/jdbcdemo";
+		String uname="root";
+		String pw="Arifa@12";
+		String query="select *from student";		
+		Connection con=DriverManager.getConnection(url, uname, pw);
+		
+		Statement st=con.createStatement();
+		
+		ResultSet rs=st.executeQuery(query);
+        
+		while(rs.next()) {
+		   System.out.println("Id is "+rs.getInt(1));
+		   System.out.println("Name is "+rs.getString(2));
+		   System.out.println("gpa is "+rs.getFloat(3));
+		   System.out.println();
+		}
+		
+		con.close();
+	}
+	 
+	 //insert hardly 
+	 public static void insertRecords()throws SQLException {
+			String url="jdbc:mysql://localhost:3306/jdbcdemo";
+			String uname="root";
+			String pw="Arifa@12";
+			String query="insert into student (name,gpa) values(\"Anupriya\",8)";		
+			Connection con=DriverManager.getConnection(url, uname, pw);
+			
+			Statement st=con.createStatement();
+			
+			int rows=st.executeUpdate(query);
+	        
+			
+			System.out.println("number of rows affected are "+rows);
+			
+			
+			con.close();
+		}
+	 //insert using PreparedStatement 
+	 public static void insertUsingPSt() throws SQLException {
+			String url="jdbc:mysql://localhost:3306/jdbcdemo";
+			String uname="root";
+			String pw="Arifa@12";
+			
+			String NAME="Varun";
+			float GPA=(float) 7.0;
+			String query="insert into student (name,gpa) values (?,?);";
+			Connection con=DriverManager.getConnection(url, uname, pw);
+			
+			PreparedStatement pst=con.prepareStatement(query);
+			pst.setString(1,NAME);
+			pst.setFloat(2, GPA);
+		
+			int rows=pst.executeUpdate();
+
+			System.out.println("number of rows affected are "+rows);
+			con.close();
+		}
+
+	 //delete 
+	 
+	 public static void delete() throws SQLException {
+			String url="jdbc:mysql://localhost:3306/jdbcdemo";
+			String uname="root";
+			String pw="Arifa@12";
+			
+			int id=6;
+			String query="delete from student where ID = " +id;		
+			Connection con=DriverManager.getConnection(url, uname, pw);
+			
+			Statement st=con.createStatement();
+			
+			int rows=st.executeUpdate(query);
+	        
+			
+			System.out.println("number of rows affected are "+rows);
+			
+			
+			con.close();
+		}
+
+//update
+public static void update() throws SQLException {
+			String url="jdbc:mysql://localhost:3306/jdbcdemo";
+			String uname="root";
+			String pw="Arifa@12";
+			
+			
+			String query="update student set gpa=7.3 where ID = 7;";		
+			Connection con=DriverManager.getConnection(url, uname, pw);
+			
+			Statement st=con.createStatement();
+			
+			int rows=st.executeUpdate(query);
+	        
+			
+			System.out.println("number of rows affected are "+rows);
+			
+			
+			con.close();
+		}
+
+}
