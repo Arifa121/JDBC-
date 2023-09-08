@@ -190,4 +190,24 @@ output
 Id is 2
 Name is Ashwin
 gpa is 8.0
+
+
+public static void sp2()throws SQLException {
+			String url="jdbc:mysql://localhost:3306/jdbcdemo";
+			String uname="root";
+			String pw="Arifa@12";
+		    int id=1;		
+			Connection con=DriverManager.getConnection(url, uname, pw);
+			
+			CallableStatement cst=con.prepareCall("{call GetNamebyId(?,?)}");
+			cst.setInt(1, id);
+			cst.registerOutParameter(2, Types.VARCHAR);
+			cst.executeUpdate(); //y inga update naa id input la vangi output update panromla so actually executeupdate return int values how many rows are get updated but no need to print here so we doesnt receive with resultet 
+			System.out.println("Name is "+cst.getString(2));
+			
+			con.close();
+		}
+output
+Name is Aarthi
+
 }
