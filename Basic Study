@@ -209,5 +209,27 @@ public static void sp2()throws SQLException {
 		}
 output
 Name is Aarthi
+//commit vs auto commit
+	 public static void commit()throws SQLException {
+			String url="jdbc:mysql://localhost:3306/jdbcdemo";
+			String uname="root";
+			String pw="Arifa@12";
+		    
+		    String query1="update student set gpa=9.7 where id=1";
+		    String query2="update student set gpa=9.7 where id=2";
+			Connection con=DriverManager.getConnection(url, uname, pw);
+			Statement st=con.createStatement();
+			
+			int rows1=st.executeUpdate(query1);
+			System.out.println("Rows affected "+rows1);
+			int rows2=st.executeUpdate(query2);
+			System.out.println("Rows affected "+rows2);
+			con.close();
+		}
+Rows affected 1
+Rows affected 1
 
+//if i intentionaly making mistake while updating 2nd querey
+1st one get updated but,
+// we are expecting if getting update naa then update should perform for both student if not then shouldnot update to both
 }
