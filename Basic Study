@@ -112,6 +112,14 @@ public static void update() throws SQLException {
 			con.close();
 		}
 //callable statement
+//# ID, NAME, GPA
+'1', 'Aarthi', '9.2'
+'2', 'Ashwin', '8.0'
+'3', 'Balaji', '8.3'
+'4', 'Krithika', '7.5'
+'5', 'Anupriya', '8.0'
+'7', 'Varun', '7.3'
+//
 public static void sp()throws SQLException {
 			String url="jdbc:mysql://localhost:3306/jdbcdemo";
 			String uname="root";
@@ -132,4 +140,54 @@ public static void sp()throws SQLException {
 			
 			con.close();
 		}
+output
+Id is 1
+Name is Aarthi
+gpa is 9.2
+
+Id is 2
+Name is Ashwin
+gpa is 8.0
+
+Id is 3
+Name is Balaji
+gpa is 8.3
+
+Id is 4
+Name is Krithika
+gpa is 7.5
+
+Id is 5
+Name is Anupriya
+gpa is 8.0
+
+Id is 7
+Name is Varun
+gpa is 7.3
+
+public static void sp1()throws SQLException {
+			String url="jdbc:mysql://localhost:3306/jdbcdemo";
+			String uname="root";
+			String pw="Arifa@12";
+		    int id=2;		
+			Connection con=DriverManager.getConnection(url, uname, pw);
+			
+			CallableStatement cst=con.prepareCall("{call GetStudbyId(?)}");
+			cst.setInt(1, id);
+			ResultSet rs=cst.executeQuery();
+	        
+			while(rs.next()) {
+			   System.out.println("Id is "+rs.getInt(1));
+			   System.out.println("Name is "+rs.getString(2));
+			   System.out.println("gpa is "+rs.getFloat(3));
+			   System.out.println();
+			}
+			
+			con.close();
+		}
+
+output 
+Id is 2
+Name is Ashwin
+gpa is 8.0
 }
